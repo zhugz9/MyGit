@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mp.dao.commentMapper" >
+  <resultMap id="BaseResultMap" type="com.mp.pojo.Comment" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="commodity_evaluation" property="commodityEvaluation" jdbcType="VARCHAR" />
+    <result column="description_matches" property="descriptionMatches" jdbcType="INTEGER" />
+    <result column="sellers_services" property="sellersServices" jdbcType="INTEGER" />
+    <result column="logistics_services" property="logisticsServices" jdbcType="INTEGER" />
+    <result column="service_evaluation" property="serviceEvaluation" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mp.pojo.Comment" extends="BaseResultMap" >
+    <result column="soaking_pictures" property="soakingPictures" jdbcType="VARBINARY" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cid, gid, uid, commodity_evaluation, description_matches, sellers_services, logistics_services, 
+    service_evaluation
+  </sql>
+  <sql id="Blob_Column_List" >
+    soaking_pictures
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comment
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from comment
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mp.pojo.Comment" >
+    insert into comment (cid, gid, uid, 
+      commodity_evaluation, description_matches, 
+      sellers_services, logistics_services, service_evaluation, 
+      soaking_pictures)
+    values (#{cid,jdbcType=INTEGER}, #{gid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+      #{commodityEvaluation,jdbcType=VARCHAR}, #{descriptionMatches,jdbcType=INTEGER}, 
+      #{sellersServices,jdbcType=INTEGER}, #{logisticsServices,jdbcType=INTEGER}, #{serviceEvaluation,jdbcType=VARCHAR}, 
+      #{soakingPictures,jdbcType=VARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mp.pojo.Comment" >
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="commodityEvaluation != null" >
+        commodity_evaluation,
+      </if>
+      <if test="descriptionMatches != null" >
+        description_matches,
+      </if>
+      <if test="sellersServices != null" >
+        sellers_services,
+      </if>
+      <if test="logisticsServices != null" >
+        logistics_services,
+      </if>
+      <if test="serviceEvaluation != null" >
+        service_evaluation,
+      </if>
+      <if test="soakingPictures != null" >
+        soaking_pictures,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="commodityEvaluation != null" >
+        #{commodityEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionMatches != null" >
+        #{descriptionMatches,jdbcType=INTEGER},
+      </if>
+      <if test="sellersServices != null" >
+        #{sellersServices,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsServices != null" >
+        #{logisticsServices,jdbcType=INTEGER},
+      </if>
+      <if test="serviceEvaluation != null" >
+        #{serviceEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="soakingPictures != null" >
+        #{soakingPictures,jdbcType=VARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mp.pojo.Comment" >
+    update comment
+    <set >
+      <if test="gid != null" >
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="commodityEvaluation != null" >
+        commodity_evaluation = #{commodityEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionMatches != null" >
+        description_matches = #{descriptionMatches,jdbcType=INTEGER},
+      </if>
+      <if test="sellersServices != null" >
+        sellers_services = #{sellersServices,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsServices != null" >
+        logistics_services = #{logisticsServices,jdbcType=INTEGER},
+      </if>
+      <if test="serviceEvaluation != null" >
+        service_evaluation = #{serviceEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="soakingPictures != null" >
+        soaking_pictures = #{soakingPictures,jdbcType=VARBINARY},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mp.pojo.Comment" >
+    update comment
+    set gid = #{gid,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
+      commodity_evaluation = #{commodityEvaluation,jdbcType=VARCHAR},
+      description_matches = #{descriptionMatches,jdbcType=INTEGER},
+      sellers_services = #{sellersServices,jdbcType=INTEGER},
+      logistics_services = #{logisticsServices,jdbcType=INTEGER},
+      service_evaluation = #{serviceEvaluation,jdbcType=VARCHAR},
+      soaking_pictures = #{soakingPictures,jdbcType=VARBINARY}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mp.pojo.Comment" >
+    update comment
+    set gid = #{gid,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
+      commodity_evaluation = #{commodityEvaluation,jdbcType=VARCHAR},
+      description_matches = #{descriptionMatches,jdbcType=INTEGER},
+      sellers_services = #{sellersServices,jdbcType=INTEGER},
+      logistics_services = #{logisticsServices,jdbcType=INTEGER},
+      service_evaluation = #{serviceEvaluation,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

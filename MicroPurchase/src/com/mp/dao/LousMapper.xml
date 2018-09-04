@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mp.dao.LousMapper">
+
+	<resultMap type="com.mp.pojo.Lous" id="resultLous">
+		<id column="gid" property="gid" />
+		<result column="tid" property="tid" />
+		<result column="cid" property="cid" />
+		<result column="gname" property="gname" />
+		<result column="sid" property="sid" />
+		<result column="sname" property="sname" />
+		<result column="phone" property="phone" />
+		<result column="shop_address" property="shop_address" />
+		<result column="pid" property="pid" />
+		<result column="image_path" property="image_path" />
+	</resultMap>
+
+	<select id="queryLousList" resultMap="resultLous">
+		select c.gid gid,
+		g.tid tid,
+		c.cid cid,
+		c.gname gname,
+		s.sid sid,
+		s.sname sname,
+		s.phone phone,
+		s.shop_address shop_address,
+		p.pid pid,
+		p.image_path image_path
+		from
+		goods g,
+		commodityDetails c,
+		store s,
+		typeOfCommodity t,
+		picture p
+		where
+		c.gid = g.gid
+		and g.sid = s.sid
+		and g.tid = t.tid
+		and c.pid = p.pid
+		and
+		t.tid = #{tid}
+		group by g.gid
+		order by t.tid
+		limit 0,6
+	</select>
+	
+	<select id="queryLousListByid" resultMap="resultLous">
+		select c.gid gid,
+		g.tid tid,
+		c.cid cid,
+		c.gname gname,
+		s.sid sid,
+		s.sname sname,
+		s.phone phone,
+		s.shop_address shop_address,
+		p.pid pid,
+		p.image_path image_path
+		from
+		goods g,
+		commodityDetails c,
+		store s,
+		typeOfCommodity t,
+		picture p
+		where
+		c.gid = g.gid
+		and g.sid = s.sid
+		and g.tid = t.tid
+		and c.pid = p.pid
+		and
+		t.tid = #{tid}
+		and g.gid != #{gid}
+		group by g.gid
+		order by t.tid
+		limit 0,10
+	</select>
+	
+</mapper>

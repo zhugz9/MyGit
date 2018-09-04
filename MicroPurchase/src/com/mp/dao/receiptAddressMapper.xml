@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mp.dao.receiptAddressMapper" >
+  <resultMap id="BaseResultMap" type="com.mp.pojo.ReceiptAddress" >
+    <id column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="area_of_residence" property="areaOfResidence" jdbcType="VARCHAR" />
+    <result column="complete_address" property="completeAddress" jdbcType="VARCHAR" />
+    <result column="zip_code" property="zipCode" jdbcType="INTEGER" />
+    <result column="name_of_consignee" property="nameOfConsignee" jdbcType="VARCHAR" />
+    <result column="contact_number" property="contactNumber" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rid, uid, area_of_residence, complete_address, zip_code, name_of_consignee, contact_number
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from receiptaddress
+    where rid = #{rid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from receiptaddress
+    where rid = #{rid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mp.pojo.ReceiptAddress" >
+    insert into receiptaddress (rid, uid, area_of_residence, 
+      complete_address, zip_code, name_of_consignee, 
+      contact_number)
+    values (#{rid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{areaOfResidence,jdbcType=VARCHAR}, 
+      #{completeAddress,jdbcType=VARCHAR}, #{zipCode,jdbcType=INTEGER}, #{nameOfConsignee,jdbcType=VARCHAR}, 
+      #{contactNumber,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mp.pojo.ReceiptAddress" >
+    insert into receiptaddress
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="areaOfResidence != null" >
+        area_of_residence,
+      </if>
+      <if test="completeAddress != null" >
+        complete_address,
+      </if>
+      <if test="zipCode != null" >
+        zip_code,
+      </if>
+      <if test="nameOfConsignee != null" >
+        name_of_consignee,
+      </if>
+      <if test="contactNumber != null" >
+        contact_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="areaOfResidence != null" >
+        #{areaOfResidence,jdbcType=VARCHAR},
+      </if>
+      <if test="completeAddress != null" >
+        #{completeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=INTEGER},
+      </if>
+      <if test="nameOfConsignee != null" >
+        #{nameOfConsignee,jdbcType=VARCHAR},
+      </if>
+      <if test="contactNumber != null" >
+        #{contactNumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mp.pojo.ReceiptAddress" >
+    update receiptaddress
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="areaOfResidence != null" >
+        area_of_residence = #{areaOfResidence,jdbcType=VARCHAR},
+      </if>
+      <if test="completeAddress != null" >
+        complete_address = #{completeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        zip_code = #{zipCode,jdbcType=INTEGER},
+      </if>
+      <if test="nameOfConsignee != null" >
+        name_of_consignee = #{nameOfConsignee,jdbcType=VARCHAR},
+      </if>
+      <if test="contactNumber != null" >
+        contact_number = #{contactNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mp.pojo.ReceiptAddress" >
+    update receiptaddress
+    set uid = #{uid,jdbcType=INTEGER},
+      area_of_residence = #{areaOfResidence,jdbcType=VARCHAR},
+      complete_address = #{completeAddress,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=INTEGER},
+      name_of_consignee = #{nameOfConsignee,jdbcType=VARCHAR},
+      contact_number = #{contactNumber,jdbcType=VARCHAR}
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+</mapper>

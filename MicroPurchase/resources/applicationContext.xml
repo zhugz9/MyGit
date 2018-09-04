@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-3.2.xsd 
+     http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	<!-- 1)读取数据库配置文件 -->
+	<context:property-placeholder location="classpath:db.properties" />
+	
+	<!-- 2)配置数据源 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url"  value="${url}" />
+		<property name="username" value="${user}" />
+		<property name="password" value="${password}" />
+	</bean>
+
+	<!-- 3)配置SqlSessionFactoryBean -->
+	<bean  class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 引用数据源组件 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 引用MyBatis配置文件中的配置 -->
+		<property name="configLocation" value="classpath:mybatis_config.xml" />
+		<!-- 配置SQL映射文件信息 -->
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:com/mp/dao/*.xml</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 配置dao -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	  <property name="basePackage" value="com.mp.dao"/>
+	</bean>
+	
+	<!-- 配置扫描的业务bean -->
+	<context:component-scan base-package="com.mp.service"/>
+   
+   <!-- 配置声明式事务  2部 -->
+    <!-- 配置事务管理器 -->
+    <bean id="tx" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+   
+    <!-- 开启事务注解 -->
+    <tx:annotation-driven transaction-manager="tx"/>
+   
+   
+   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.qq.com"></property>
+		<property name="port" value="465"></property>
+		<property name="username" value="1329097585"></property>
+		<property name="password" value="hsnnuiqcanlihcgd"></property>
+		<property name="protocol" value="smtp"></property>
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.ssl.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+   
+    
+  
+</beans>
+
+
+
+
+
+

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mp.dao.commodityDetailsMapper">
+
+	<select id="queryCommodityDetailsById" resultType="com.mp.pojo.CommodityDetails">
+		select g.gid
+		gid,g.commodity_code commodity_code,c.gname gname,c.original_cost
+		original_cost,s.sname sname,s.phone phone,s.shop_address shop_address,
+		s.sdescribe sdescribe,s.service_attitude
+		service_attitude,s.logistics_speed logistics_speed,s.credibility
+		credibility,s.activity activity
+		from goods g,commodityDetails c,picture
+		p,store s
+		where c.gid = g.gid
+		and c.pid = p.pid
+		and g.sid = s.sid
+		and
+		g.gid = #{gid}
+		group by g.gid
+	</select>
+
+	<select id="queryImagrById" resultType="com.mp.pojo.CommodityDetails">
+		select gid,image_path from commoditydetailspicture where gid = #{gid}
+	</select>
+	
+	<select id="queryOriginalCost" resultType="double" >
+		select original_cost from commoditydetails where gid = #{gid}
+	</select>
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mp.dao.goodsMapper">
+	<!-- <resultMap type="com.mp.pojo.CommodityDetails" id="resultCommodityDetails">
+		<id column="cid" property="cid" />
+		<result column="gname" property="gname" />
+		<result column="gid" property="gid" />
+	</resultMap>
+
+	<resultMap type="com.mp.pojo.Store" id="resultStore">
+		<id column="sid" property="sid" />
+		<result column="sname" property="sname" />
+		<result column="phone" property="phone" />
+		<result column="shop_address" property="shop_address" />
+	</resultMap>
+
+	<resultMap type="com.mp.pojo.Picture" id="resultPicture">
+		<id column="pid" property="pid" />
+		<result column="image_path" property="image_path" />
+	</resultMap>
+
+	<resultMap type="com.mp.pojo.Goods" id="resultGoods">
+		<id column="gid" property="gid" />
+		<collection property="commodityDetails" resultMap="resultCommodityDetails" />
+		<collection property="stores" resultMap="resultStore" />
+		<collection property="pictures" resultMap="resultPicture" />
+	</resultMap> -->
+
+	<!-- <select id="queryGoodsList" resultType="com.mp.pojo.Lous">
+		select c.gid gid,
+		c.cid cid,
+		c.gname gname,
+		s.sid sid,
+		s.sname sname,
+		s.phone phone,
+		s.shop_address shop_address,
+		p.pid pid,
+		p.image_path image_path
+		from goods g,
+		commodityDetails c,
+		store s,
+		typeOfCommodity t,
+		picture p
+		where c.gid = g.gid
+		and g.sid = s.sid
+		and g.tid = t.tid
+		and c.pid = p.pid
+		and t.tid = 10
+		order by t.tid
+		limit 0,6
+	</select> -->
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mp.dao.shoppingCartMapper">
+	<insert id="addShoppingCart">
+		insert into shoppingcart (gid,uid,number_of_commodities) values
+		(#{gid},#{uid},#{nums})
+	</insert>
+	
+	<select id="getAllForUid" resultType="ShoppingCart">
+		select sc.sid,g.tid,g.commodity_code,cd.gid,sc.number_of_commodities,cd.gname,cd.original_cost,cd.concessional_rate,p.image_path
+from shoppingcart sc,commoditydetails cd,picture p,goods g
+where sc.gid=cd.gid and p.pid=cd.pid and g.gid=cd.gid and sc.uid=#{uid}
+	</select>
+	
+	<delete id="deleteSome">
+		delete from shoppingcart where sid in
+		<foreach collection="array" item="sids" index="index"  
+                         open="(" close=")" separator=",">  
+                    #{sids}  
+        </foreach>  
+	</delete>
+	
+</mapper>

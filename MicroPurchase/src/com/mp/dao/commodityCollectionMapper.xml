@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mp.dao.commodityCollectionMapper" >
+  <resultMap id="BaseResultMap" type="com.mp.pojo.CommodityCollection" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="collection_date" property="collectionDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cid, uid, gid, collection_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from commoditycollection
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from commoditycollection
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mp.pojo.CommodityCollection" >
+    insert into commoditycollection (cid, uid, gid, 
+      collection_date)
+    values (#{cid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{gid,jdbcType=INTEGER}, 
+      #{collectionDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mp.pojo.CommodityCollection" >
+    insert into commoditycollection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="collectionDate != null" >
+        collection_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="collectionDate != null" >
+        #{collectionDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mp.pojo.CommodityCollection" >
+    update commoditycollection
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="collectionDate != null" >
+        collection_date = #{collectionDate,jdbcType=DATE},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mp.pojo.CommodityCollection" >
+    update commoditycollection
+    set uid = #{uid,jdbcType=INTEGER},
+      gid = #{gid,jdbcType=INTEGER},
+      collection_date = #{collectionDate,jdbcType=DATE}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

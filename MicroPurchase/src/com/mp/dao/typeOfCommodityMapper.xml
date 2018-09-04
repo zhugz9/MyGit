@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mp.dao.typeOfCommodityMapper">
+
+	<!-- 获取一级菜单 -->
+	<select id="queryParentIdIsNull" resultType="com.mp.pojo.TypeOfCommodity">
+		select * from
+		typeofcommodity where parent_id is null
+	</select>
+
+	<resultMap type="com.mp.pojo.TypeOfCommodity" id="resultCommodities">
+		<id column="tid2" property="tid" />
+		<result column="tname2" property="tname" />
+	</resultMap>
+
+	<resultMap type="com.mp.pojo.TypeOfCommodity" id="resultTypeOfCommodity">
+		<id column="tid" property="tid" />
+		<result column="tname" property="tname" />
+		<collection property="commodities" resultMap="resultCommodities"></collection>
+	</resultMap>
+
+	<!-- 根据一级查询二级 &lt; -->
+	<select id="queryTypeOfCommodityById" resultMap="resultTypeOfCommodity">
+		select t1.tid
+		tid,t1.tname tname,t2.tid tid2,t2.tname tname2
+		from typeofcommodity
+		t1,typeofcommodity t2
+		where t2.parent_id = t1.tid and t2.parent_id
+		&lt;= #{tid}
+		order by t1.tid,t2.tid
+	</select>
+
+	<!-- 查询每个一级菜单下的第一个二级菜单 -->
+	<select id="queryTypeOfCommodityTwoAll" resultType="com.mp.pojo.TypeOfCommodity">
+		select t2.tid from typeOfCommodity t1,typeOfCommodity t2
+		where t2.parent_id = t1.tid
+		group by t1.tid
+		order by t1.tid,t2.tid
+	</select>
+</mapper>

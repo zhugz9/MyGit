@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mp.dao.oprderDetailsMapper" >
+  
+  <select id="getAllOrderForUid" resultType="com.mp.pojo.OprderDetails">
+  		select gd.tid,gd.gid,od.did,p.image_path,od.oid,od.order_date,od.ordernumber,cd.gname,od.number_of_commodities,od.unit_price_of_goods,od.total_amount
+from oprderdetails od,orderforgoods ofg,commoditydetails cd,picture p,goods gd
+where od.oid=ofg.oid and ofg.gid=cd.gid and p.pid=cd.pid and gd.gid=cd.gid and uid=#{uid} order by order_date desc limit #{begin},#{page}
+  </select>
+  
+  <select id="getAllOrderForUidNumber" resultType="int">
+  		select count(*)
+		from oprderdetails od,orderforgoods ofg,commoditydetails cd
+		where od.oid=ofg.oid and ofg.gid=cd.gid and uid=#{uid}
+  </select>
+  
+  <delete id="deleteOrder" parameterType="int">
+  		delete from oprderdetails where did=#{did}
+  </delete>
+  
+  <insert id="addOrder" parameterType="com.mp.pojo.OprderDetails" >
+  	insert into oprderdetails (oid,number_of_commodities,unit_price_of_goods,total_amount,
+	order_date,state,ordernumber) values 
+	(#{oid},#{number_of_commodities},#{unit_price_of_goods},#{total_amount},#{order_date},0,#{ordernumber})
+  </insert>
+  
+  
+  <resultMap id="BaseResultMap" type="com.mp.pojo.OprderDetails" >
+    <id column="did" property="did" jdbcType="INTEGER" />
+    <result column="oid" property="oid" jdbcType="INTEGER" />
+    <result column="number_of_commodities" property="numberOfCommodities" jdbcType="INTEGER" />
+    <result column="unit_price_of_goods" property="unitPriceOfGoods" jdbcType="DOUBLE" />
+    <result column="total_amount" property="totalAmount" jdbcType="DOUBLE" />
+    <result column="order_date" property="orderDate" jdbcType="DATE" />
+    <result column="date_of_arrival" property="dateOfArrival" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    did, oid, number_of_commodities, unit_price_of_goods, total_amount, order_date, date_of_arrival
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from oprderdetails
+    where did = #{did,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oprderdetails
+    where did = #{did,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mp.pojo.OprderDetails" >
+    insert into oprderdetails (did, oid, number_of_commodities, 
+      unit_price_of_goods, total_amount, order_date, 
+      date_of_arrival)
+    values (#{did,jdbcType=INTEGER}, #{oid,jdbcType=INTEGER}, #{numberOfCommodities,jdbcType=INTEGER}, 
+      #{unitPriceOfGoods,jdbcType=DOUBLE}, #{totalAmount,jdbcType=DOUBLE}, #{orderDate,jdbcType=DATE}, 
+      #{dateOfArrival,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mp.pojo.OprderDetails" >
+    insert into oprderdetails
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="did != null" >
+        did,
+      </if>
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="numberOfCommodities != null" >
+        number_of_commodities,
+      </if>
+      <if test="unitPriceOfGoods != null" >
+        unit_price_of_goods,
+      </if>
+      <if test="totalAmount != null" >
+        total_amount,
+      </if>
+      <if test="orderDate != null" >
+        order_date,
+      </if>
+      <if test="dateOfArrival != null" >
+        date_of_arrival,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="did != null" >
+        #{did,jdbcType=INTEGER},
+      </if>
+      <if test="oid != null" >
+        #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="numberOfCommodities != null" >
+        #{numberOfCommodities,jdbcType=INTEGER},
+      </if>
+      <if test="unitPriceOfGoods != null" >
+        #{unitPriceOfGoods,jdbcType=DOUBLE},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="orderDate != null" >
+        #{orderDate,jdbcType=DATE},
+      </if>
+      <if test="dateOfArrival != null" >
+        #{dateOfArrival,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mp.pojo.OprderDetails" >
+    update oprderdetails
+    <set >
+      <if test="oid != null" >
+        oid = #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="numberOfCommodities != null" >
+        number_of_commodities = #{numberOfCommodities,jdbcType=INTEGER},
+      </if>
+      <if test="unitPriceOfGoods != null" >
+        unit_price_of_goods = #{unitPriceOfGoods,jdbcType=DOUBLE},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="orderDate != null" >
+        order_date = #{orderDate,jdbcType=DATE},
+      </if>
+      <if test="dateOfArrival != null" >
+        date_of_arrival = #{dateOfArrival,jdbcType=DATE},
+      </if>
+    </set>
+    where did = #{did,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mp.pojo.OprderDetails" >
+    update oprderdetails
+    set oid = #{oid,jdbcType=INTEGER},
+      number_of_commodities = #{numberOfCommodities,jdbcType=INTEGER},
+      unit_price_of_goods = #{unitPriceOfGoods,jdbcType=DOUBLE},
+      total_amount = #{totalAmount,jdbcType=DOUBLE},
+      order_date = #{orderDate,jdbcType=DATE},
+      date_of_arrival = #{dateOfArrival,jdbcType=DATE}
+    where did = #{did,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mp.dao.cityMapper">
+
+	<resultMap type="com.mp.pojo.City" id="listResult">
+		<id property="cid" column="cid2" />
+		<result property="cname" column="cname2" />
+		<result property="parentId" column="parent_id" />
+	</resultMap>
+	<resultMap type="com.mp.pojo.City" id="cityResult">
+		<id property="cid" column="cid" />
+		<result property="cname" column="cname" />
+		<collection property="cityList" resultMap="listResult"></collection>
+	</resultMap>
+
+	<select id="selectByPrimaryKey" resultMap="cityResult">
+		select c1.cid cid ,
+		c1.cname cname , c2.cid cid2 , c2.cname cname2 ,c2.parent_id parent_id from city c1 , city c2
+		where c2.parent_id = c1.cid
+		group by c1.cname,c2.cname
+		order by c1.cid,c2.cname desc
+
+	</select>
+
+</mapper>

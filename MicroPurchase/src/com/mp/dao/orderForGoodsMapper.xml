@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mp.dao.orderForGoodsMapper">
+
+	<insert id="addorderForGoods" parameterType="com.mp.pojo.OrderForGoods" useGeneratedKeys="true" keyProperty="oid" >
+		insert into orderforgoods (uid,gid) values(#{uid},#{gid})
+	</insert>
+
+</mapper>
